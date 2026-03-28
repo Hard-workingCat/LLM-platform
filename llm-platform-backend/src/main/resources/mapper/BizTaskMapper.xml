@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lab.llm_platform.mapper.BizTaskMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO biz_task (
+            task_name, user_id, task_type, env_id, gpu_required, priority, 
+            dataset_id, base_model_id, hyperparameters, command, status, 
+            submitted_at
+        ) VALUES (
+            #{taskName}, #{userId}, #{taskType}, #{envId}, #{gpuRequired}, #{priority}, 
+            #{datasetId}, #{baseModelId}, #{hyperparameters}, #{command}, #{status}, 
+            NOW()
+        )
+    </insert>
+
+    <update id="updateById">
+        UPDATE biz_task
+        <set>
+            <if test="status != null">status = #{status},</if>
+            <if test="allocatedGpus != null">allocated_gpus = #{allocatedGpus},</if>
+            <if test="errorMsg != null">error_msg = #{errorMsg},</if>
+            <if test="startedAt != null">started_at = #{startedAt},</if>
+            <if test="finishedAt != null">finished_at = #{finishedAt},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectById" resultType="com.lab.llm_platform.entity.BizTask">
+        SELECT * FROM biz_task WHERE id = #{id}
+    </select>
+
+    <select id="selectByStatusOrderByPriorityDesc" resultType="com.lab.llm_platform.entity.BizTask">
+        SELECT * FROM biz_task 
+        WHERE status = #{status} 
+        ORDER BY priority DESC, submitted_at ASC
+    </select>
+
+</mapper>

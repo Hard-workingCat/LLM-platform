@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lab.llm_platform.mapper.SysGpuMapper">
+
+    <select id="selectAll" resultType="com.lab.llm_platform.entity.SysGpu">
+        SELECT * FROM sys_gpu
+    </select>
+
+    <select id="selectByStatus" resultType="com.lab.llm_platform.entity.SysGpu">
+        SELECT * FROM sys_gpu WHERE status = #{status}
+    </select>
+
+    <update id="updateStatusAndTaskId">
+        UPDATE sys_gpu 
+        SET status = #{status}, 
+            current_task_id = #{taskId},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+</mapper>
