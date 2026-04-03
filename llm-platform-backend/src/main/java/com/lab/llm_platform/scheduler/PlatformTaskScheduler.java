@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class TaskScheduler {
+public class PlatformTaskScheduler {
 
     private final BizTaskService taskService;
 
-    public TaskScheduler(BizTaskService taskService) {
+    public PlatformTaskScheduler(BizTaskService taskService) {
         this.taskService = taskService;
     }
 
